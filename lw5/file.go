@@ -2,7 +2,6 @@ package main
 
 import (
 	"io/ioutil"
-	"log"
 	"strings"
 )
 
@@ -14,7 +13,7 @@ type File struct {
 func GetFiles(dir string, keyword string) []File {
 	files, err := ioutil.ReadDir(dir)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	keyword = strings.ToLower(keyword)
