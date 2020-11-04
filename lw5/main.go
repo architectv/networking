@@ -10,7 +10,7 @@ func main() {
 	args := os.Args
 	if len(args) < 5 {
 		fmt.Println(
-			"Usage: ./smtp to@gmail.com from@gmail.com password keyword\n")
+			"Usage: ./smtp to@gmail.com from@gmail.com password keyword")
 		return
 	}
 
