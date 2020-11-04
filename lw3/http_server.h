@@ -20,7 +20,7 @@
 #include "const.h"
 
 #define THREAD_POOL_SIZE 20
-#define LISTEN_COUNT 100
+#define LISTEN_COUNT 5
 
 extern int sockfd;
 extern int sigint_flag;

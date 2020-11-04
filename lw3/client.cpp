@@ -73,7 +73,7 @@ int main(int argc, char** argv) {
     server.sin_port = htons(PORT);
     server.sin_addr.s_addr = inet_addr("127.0.0.1");
 
-    if (connect(sockfd, (const struct sockaddr*)&server, sizeof(server)) != 0) {
+    if (connect(sockfd, (const SA*)&server, sizeof(server)) != 0) {
         close(sockfd);
         printf("\nError [connect()]\n");
         return CONNECT_ERR;
