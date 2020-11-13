@@ -17,7 +17,8 @@ void save_statistics(void) {
 
     std::string file = "statistics/";
     file += std::ctime(&end_time);
-    file += ".txt";
+    file[file.length()-1] = '.';
+    file += "txt";
 
     std::ofstream fout(file);
     for (const auto& ip : content_map) {
