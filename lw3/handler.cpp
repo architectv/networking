@@ -14,9 +14,9 @@ void* thread_function(void* argv) {
         pthread_mutex_lock(&mutex);
         if (q.empty()) {
             pthread_cond_wait(&condvar, &mutex);
-            pclient = &q.front();
-            q.pop();
         }
+        pclient = &q.front();
+        q.pop();
         pthread_mutex_unlock(&mutex);
 
         if (pclient != nullptr) {
@@ -34,4 +34,5 @@ void handle_function(client_t client) {
     auto response = get_response(client, request);
 
     write(client.socket, response.c_str(), response.length());
+    close(client.socket);
 }
