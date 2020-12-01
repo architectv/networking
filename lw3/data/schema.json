@@ -1,0 +1,28 @@
+{
+    "Comment": "My comment",
+    "Count": 10,
+    "DiskParam": {
+        "DB": 10.000000,
+        "DBAngle": 1.234000
+    },
+    "Range": true,
+    "Blades": [
+        {
+            "Caption": "A",
+            "Value": 65
+        },
+        {
+            "Caption": "B",
+            "Value": 66
+        },
+        {
+            "Caption": "C",
+            "Value": 67
+        }
+    ],
+    "Slots": [
+        0,
+        1,
+        2
+    ]
+}
