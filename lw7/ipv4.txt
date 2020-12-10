@@ -1,0 +1,80 @@
+4:
+
+enable
+config t
+int gigabitEthernet 0/0/0 
+ip add 192.168.2.90 255.255.255.252
+exit
+int vlan 1
+ip add 192.168.2.78 255.255.255.240
+exit
+ip route 192.168.2.84 255.255.255.252 192.168.2.89
+ip route 192.168.2.80 255.255.255.252 192.168.2.89
+ip route 192.168.2.0 255.255.255.224 192.168.2.89
+ip route 192.168.2.32 255.255.255.224 192.168.2.89
+exit
+show ip route
+
+3:
+
+enable
+config t
+int serial 0/1/0
+ip add 192.168.2.86 255.255.255.252
+exit
+int gigabitEthernet 0/0/0
+ip add 192.168.2.89 255.255.255.252
+exit
+ip route 192.168.2.64 255.255.255.240 192.168.2.90
+ip route 192.168.2.80 255.255.255.252 192.168.2.85
+ip route 192.168.2.0 255.255.255.224 192.168.2.85
+ip route 192.168.2.32 255.255.255.224 192.168.2.85
+exit
+show ip route
+
+2:
+
+enable
+config t
+int serial 0/1/0
+ip add 192.168.2.85 255.255.255.252
+exit
+int gigabitEthernet 0/0/0
+ip add 192.168.2.82 255.255.255.252
+exit
+ip route 192.168.2.64 255.255.255.240 192.168.2.86
+ip route 192.168.2.88 255.255.255.252 192.168.2.86
+ip route 192.168.2.0 255.255.255.224 192.168.2.81
+ip route 192.168.2.32 255.255.255.224 192.168.2.81
+exit
+show ip route
+
+1:
+
+enable
+config t
+int gigabitEthernet 0/0/1
+ip add 192.168.2.1 255.255.255.224
+exit
+int gigabitEthernet 0/0/0
+ip add 192.168.2.33 255.255.255.224
+exit
+int vlan 1
+ip add 192.168.2.81 255.255.255.252
+exit
+ip dhcp pool LAN1
+network 192.168.2.0 255.255.255.224
+default-router 192.168.2.1
+exit
+ip dhcp pool LAN2
+network 192.168.2.32 255.255.255.224
+default-router 192.168.2.33
+exit
+ip route 192.168.2.84 255.255.255.252 192.168.2.82
+ip route 192.168.2.88 255.255.255.252 192.168.2.82
+ip route 192.168.2.64 255.255.255.240 192.168.2.82
+exit
+show ip route
+
+Проверка:
+ping 192.168.2.66
