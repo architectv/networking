@@ -1,0 +1,80 @@
+switch:
+
+enable
+conf t
+vlan 10
+name VLAN10
+exit
+vlan 20
+name VLAN20
+exit
+vlan 30
+name VLAN30
+exit
+
+int vlan 10
+ip add 192.168.2.254 255.255.255.0
+ip dhcp pool LAN1
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+exit
+
+int vlan 20
+ip add 192.168.3.254 255.255.255.0
+ip dhcp pool LAN2
+network 192.168.3.0 255.255.255.0
+default-router 192.168.3.1
+exit
+
+int vlan 30
+ip add 192.168.4.254 255.255.255.0
+ip dhcp pool LAN3
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+exit
+
+int range fa0/1-2
+switchport mode access
+switchport access vlan 10
+exit
+
+int range fa0/3-4
+switchport mode access
+switchport access vlan 20
+exit
+
+int range fa0/5-7
+switchport mode access
+switchport access vlan 30
+exit
+
+int gi0/1
+switchport mode trunk
+switchport trunk allowed vlan 10,20,30
+exit
+
+do wr mem
+
+router:
+
+enable
+conf t
+int gi0/0/0
+no shutdown
+int gi0/0/0.10
+encapsulation dot1Q 10
+ip address 192.168.2.1 255.255.255.0
+exit
+
+int gi0/0/0.20
+encapsulation dot1Q 20
+ip address 192.168.3.1 255.255.255.0
+exit
+
+int gi0/0/0.30
+encapsulation dot1Q 30
+ip address 192.168.4.1 255.255.255.0
+exit
+
+ip routing
+do wr mem

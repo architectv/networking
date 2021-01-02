@@ -1,0 +1,215 @@
+router 2:
+
+enable
+config t
+int serial 0/1/0
+ip add 192.168.4.2 255.255.255.0
+exit
+int serial 0/1/1
+ip add 192.168.5.1 255.255.255.0
+exit
+
+router rip
+version 2
+network 192.168.4.0
+network 192.168.5.0
+
+enable
+config t
+int serial 0/1/0
+ip add dhcp
+exit
+int serial 0/1/1
+ip add 192.168.5.1 255.255.255.0
+exit
+ip dhcp pool LAN4
+network 192.168.5.0 255.255.255.0
+default-router 192.168.5.1
+exit
+
+router 0:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.2.1 255.255.255.0
+exit
+ip dhcp pool LAN1
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+exit
+int serial 0/1/0
+ip add 192.168.4.1 255.255.255.0
+exit
+
+router rip
+version 2
+network 192.168.2.0
+network 192.168.4.0
+
+
+ip dhcp pool LAN3
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+exit
+
+router 1:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.3.1 255.255.255.0
+exit
+ip dhcp pool LAN2
+network 192.168.3.0 255.255.255.0
+default-router 192.168.3.1
+exit
+int serial 0/1/0
+ip add 192.168.5.2 255.255.255.0
+exit
+
+router rip
+version 2
+network 192.168.5.0
+network 192.168.3.0
+
+int serial 0/1/0
+ip add dhcp
+
+
+======================================================
+
+router 7:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.2.1 255.255.255.0
+exit
+ip dhcp pool LAN1
+network 192.168.2.0 255.255.255.0
+default-router 192.168.2.1
+exit
+
+enable
+config t
+int gigabitEthernet 0/0/1
+ip add 192.168.12.1 255.255.255.0
+exit
+ip dhcp pool LAN5
+network 192.168.12.0 255.255.255.0
+default-router 192.168.12.1
+exit
+
+router ospf 1
+network 192.168.2.0 0.0.0.255 area 1
+network 192.168.12.0 0.0.0.255 area 0
+router-id 1.1.1.1
+exit
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip ospf authentication-key 1234
+exit
+router ospf 1
+area 1 authentication
+exit
+
+enable
+conf t
+int gigabitEthernet 0/0/1
+ip ospf authentication-key 1234
+exit
+router ospf 1
+area 0 authentication
+exit
+
+show ip ospf int
+
+router 8:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.3.1 255.255.255.0
+exit
+ip dhcp pool LAN2
+network 192.168.3.0 255.255.255.0
+default-router 192.168.3.1
+exit
+int gigabitEthernet 0/0/1
+ip add dhcp
+
+router ospf 1
+network 192.168.3.0 0.0.0.255 area 2
+network 192.168.12.0 0.0.0.255 area 0
+router-id 2.2.2.2
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip ospf authentication-key 1234
+exit
+router ospf 1
+area 2 authentication
+exit
+
+router 9:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.4.1 255.255.255.0
+exit
+ip dhcp pool LAN3
+network 192.168.4.0 255.255.255.0
+default-router 192.168.4.1
+exit
+int gigabitEthernet 0/0/1
+ip add dhcp
+
+router ospf 1
+network 192.168.4.0 0.0.0.255 area 3
+network 192.168.12.0 0.0.0.255 area 0
+router-id 3.3.3.3
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip ospf authentication-key 1234
+exit
+router ospf 1
+area 3 authentication
+exit
+
+router 10:
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip add 192.168.5.1 255.255.255.0
+exit
+ip dhcp pool LAN4
+network 192.168.5.0 255.255.255.0
+default-router 192.168.5.1
+exit
+int gigabitEthernet 0/0/1
+ip add dhcp
+
+
+enable
+config t
+router ospf 1
+network 192.168.5.0 0.0.0.255 area 4
+network 192.168.12.0 0.0.0.255 area 0
+router-id 4.4.4.4
+
+enable
+config t
+int gigabitEthernet 0/0/0
+ip ospf authentication-key 1234
+exit
+router ospf 1
+area 4 authentication
+exit
