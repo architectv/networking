@@ -1,0 +1,72 @@
+4:
+
+enable
+config t
+int gigabitEthernet 0/0/0 
+ipv6 add 2001:8::2/64
+exit
+int vlan 1
+ipv6 add 2001:5::1/64
+exit
+ipv6 route 2001:7::/64 2001:8::1
+ipv6 route 2001:6::/64 2001:8::1
+ipv6 route 2001:4::/64 2001:8::1
+ipv6 route 2001:3::/64 2001:8::1
+exit
+show ipv6 route
+
+3:
+
+enable
+config t
+int serial 0/1/0
+ipv6 add 2001:7::2/64
+exit
+int gigabitEthernet 0/0/0
+ipv6 add 2001:8::1/64
+exit
+ipv6 route 2001:5::/64 2001:8::2
+ipv6 route 2001:6::/64 2001:7::1
+ipv6 route 2001:4::/64 2001:7::1
+ipv6 route 2001:3::/64 2001:7::1
+exit
+show ipv6 route
+
+2:
+
+enable
+config t
+int serial 0/1/0
+ipv6 add 2001:7::1/64
+exit
+int gigabitEthernet 0/0/0
+ipv6 add 2001:6::2/64
+exit
+ipv6 route 2001:8::/64 2001:7::2
+ipv6 route 2001:5::/64 2001:7::2
+ipv6 route 2001:4::/64 2001:6::1
+ipv6 route 2001:3::/64 2001:6::1
+exit
+show ipv6 route
+
+1:
+
+enable
+config t
+int gigabitEthernet 0/0/1
+ipv6 add 2001:3::1/64
+exit
+int gigabitEthernet 0/0/0
+ipv6 add 2001:4::1/64
+exit
+int vlan 1
+ipv6 add 2001:6::1/64
+exit
+ipv6 route 2001:7::/64 2001:6::2
+ipv6 route 2001:8::/64 2001:6::2
+ipv6 route 2001:5::/64 2001:6::2
+exit
+show ipv6 route
+
+Проверка:
+ping 2001:5::201:63FF:FE69:C78D
